@@ -10,7 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     
     
-//OULETS
+    //OULETS
     @IBOutlet weak var but1: UIButton!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var but2: UIButton!
@@ -28,30 +28,34 @@ class ViewController: UIViewController {
     @IBOutlet weak var butigual: UIButton!
     @IBOutlet weak var but0: UIButton!
     @IBOutlet weak var auxLabel: UILabel!
-    
+    @IBOutlet weak var warning: UILabel!
     @IBOutlet weak var clear: UIButton!
+    
     var  total: Double = 0//Valor calculado
     var  numPantallaC1: Double? = 0 //numero pantalla formato double,
     var  numPantallaC2: Double? = 0 //numero pantalla calcular guardar para calcular con el nuevo
     var  numPantallaM: String = "" // numero pantalla mostrar EN FORMATO STRING
     var  operation: String?
-
-
+    var controllerDecimal: Bool = false
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-               
-    }
         
+    }
+    
     @IBAction func buttonClick(_ sender: UIButton) {
     }
-       
+    
     @IBAction func suma(_ sender: UIButton) {
         auxLabel.text = auxLabel.text! + "+"
         numPantallaC2 = numPantallaC1
         numPantallaC1 = 0
         numPantallaM = ""
         operation = "suma"
+        controllerDecimal = false
+        warning.text = ""
         
     }
     
@@ -60,14 +64,22 @@ class ViewController: UIViewController {
         numPantallaC2 = numPantallaC1
         numPantallaC1 = 0
         numPantallaM = ""
-        operation = "resta"    }
+        operation = "resta"
+        controllerDecimal = false
+        warning.text = ""
+        
+    }
     
     @IBAction func por(_ sender: UIButton) {
         auxLabel.text = auxLabel.text! + "*"
         numPantallaC2 = numPantallaC1
         numPantallaC1 = 0
         numPantallaM = ""
-        operation = "por"    }
+        operation = "por"
+        controllerDecimal = false
+        warning.text = ""
+        
+    }
     
     @IBAction func igual(_ sender: UIButton) {
         if( operation == "suma"){
@@ -87,16 +99,26 @@ class ViewController: UIViewController {
         }
         
         auxLabel.text = String(total)
-
+        controllerDecimal = false
+        warning.text = ""
+        
     }
-        
+    
     @IBAction func decimal(_ sender: UIButton) {
-        
-        var decimal = numPantallaM.append(".")
+        if(!controllerDecimal)
+        {
+            var decimal = numPantallaM.append(".")
+            auxLabel.text =    auxLabel.text! + "."
+            controllerDecimal = true
+        }
+        else
+        {
+            warning.text = "No puedes hacer eso"
+        }
     }
     
     @IBAction func clear(_ sender: Any) {
-   
+        
         total = 0
         numPantallaC1 = 0
         numPantallaC2 = 0
@@ -105,6 +127,9 @@ class ViewController: UIViewController {
         numPantallaM = "0"
         label.text = numPantallaM
         auxLabel.text = ""
+        controllerDecimal = false
+        warning.text = ""
+        
     }
     
     //Numeros
@@ -118,8 +143,9 @@ class ViewController: UIViewController {
         label.text = numPantallaM
         numPantallaC1 = Double(numPantallaM)
         print("eey")
-        auxLabel.text =    auxLabel.text! + numPantallaM    }
-    
-    
+        auxLabel.text =    auxLabel.text! + num
+        warning.text = ""
+    }
+
     
 }
