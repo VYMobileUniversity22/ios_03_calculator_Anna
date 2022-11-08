@@ -47,7 +47,7 @@ class ViewController: UIViewController {
     }
        
     @IBAction func suma(_ sender: UIButton) {
-        auxLabel.text = numPantallaM + "+"
+        auxLabel.text = auxLabel.text! + "+"
         numPantallaC2 = numPantallaC1
         numPantallaC1 = 0
         numPantallaM = ""
@@ -56,14 +56,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func resta(_ sender: UIButton) {
-        auxLabel.text = numPantallaM + "-"
+        auxLabel.text = auxLabel.text! + "-"
         numPantallaC2 = numPantallaC1
         numPantallaC1 = 0
         numPantallaM = ""
         operation = "resta"    }
     
     @IBAction func por(_ sender: UIButton) {
-        auxLabel.text = numPantallaM + "*"
+        auxLabel.text = auxLabel.text! + "*"
         numPantallaC2 = numPantallaC1
         numPantallaC1 = 0
         numPantallaM = ""
@@ -73,6 +73,8 @@ class ViewController: UIViewController {
         if( operation == "suma"){
             total = numPantallaC2! +  numPantallaC1!
             label.text = String(total)
+            numPantallaC1 = total
+            numPantallaC2 = 0
             
         }
         else if ( operation == "por"){
@@ -83,6 +85,9 @@ class ViewController: UIViewController {
             total = numPantallaC2! -  numPantallaC1!
             label.text = String(total)
         }
+        
+        auxLabel.text = String(total)
+
     }
         
     @IBAction func decimal(_ sender: UIButton) {
@@ -95,6 +100,8 @@ class ViewController: UIViewController {
         total = 0
         numPantallaC1 = 0
         numPantallaC2 = 0
+        print(" este es mi c1 \(numPantallaC1)")
+        print(" este es mi c2 \(numPantallaC2)")
         numPantallaM = "0"
         label.text = numPantallaM
         auxLabel.text = ""
@@ -110,9 +117,8 @@ class ViewController: UIViewController {
         print(numPantallaM)
         label.text = numPantallaM
         numPantallaC1 = Double(numPantallaM)
-         
-        
-    }
+        print("eey")
+        auxLabel.text =    auxLabel.text! + numPantallaM    }
     
     
     
