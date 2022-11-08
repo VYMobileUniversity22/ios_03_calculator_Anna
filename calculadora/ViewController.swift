@@ -30,9 +30,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var auxLabel: UILabel!
     @IBOutlet weak var warning: UILabel!
     @IBOutlet weak var clear: UIButton!
+    @IBOutlet weak var butdiv: UIButton!
     
-    var  total: Double = 0//Valor calculado
-    var  numPantallaC1: Double? = 0 //numero pantalla formato double,
+    var  total: Double = 0 //Valor calculado
+    var  numPantallaC1: Double? = 0 //numero pantalla formato double
     var  numPantallaC2: Double? = 0 //numero pantalla calcular guardar para calcular con el nuevo
     var  numPantallaM: String = "" // numero pantalla mostrar EN FORMATO STRING
     var  operation: String?
@@ -80,6 +81,14 @@ class ViewController: UIViewController {
         warning.text = ""
         
     }
+    @IBAction func div(_ sender: Any) {
+        auxLabel.text = auxLabel.text! + "/"
+        numPantallaC2 = numPantallaC1
+        numPantallaC1 = 0
+        numPantallaM = ""
+        operation = "div"
+        controllerDecimal = false
+        warning.text = ""    }
     
     @IBAction func igual(_ sender: UIButton) {
         if( operation == "suma"){
@@ -95,6 +104,11 @@ class ViewController: UIViewController {
         }
         else if ( operation == "resta"){
             total = numPantallaC2! -  numPantallaC1!
+            label.text = String(total)
+        }
+        
+        else if ( operation == "div"){
+            total = numPantallaC2! /  numPantallaC1!
             label.text = String(total)
         }
         
@@ -145,6 +159,7 @@ class ViewController: UIViewController {
         print("eey")
         auxLabel.text =    auxLabel.text! + num
         warning.text = ""
+        
     }
 
     
