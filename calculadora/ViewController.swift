@@ -139,7 +139,7 @@ class ViewController: UIViewController {
         }
         numPantallaC1 = numDouble
         auxLabel.text =    auxLabel.text! + num
-        warning.text = ""
+        warning.text = "" 
     }
     
 }
