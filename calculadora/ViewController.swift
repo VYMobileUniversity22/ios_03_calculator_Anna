@@ -31,94 +31,80 @@ class ViewController: UIViewController {
     @IBOutlet weak var warning: UILabel!
     @IBOutlet weak var clear: UIButton!
     @IBOutlet weak var butdiv: UIButton!
-    
     var  total: Double = 0 //Valor calculado
     var  numPantallaC1: Double = 0 //numero pantalla formato double
     var  numPantallaC2: Double = 0 //numero pantalla calcular guardar para calcular con el nuevo
     var  numPantallaM: String = "" // numero pantalla mostrar EN FORMATO STRING
-    var  operation: String?
+    var  operation: operations = .none
     var controllerDecimal: Bool = false
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
     }
-    
+    enum operations {
+        case none, suma,resta, por, div
+    }
     @IBAction func buttonClick(_ sender: UIButton) {
+    }
+    fileprivate func screen() {
+        numPantallaC2 = numPantallaC1
+        numPantallaC1 = 0
+        numPantallaM = ""
+        controllerDecimal = false
+        warning.text = ""
     }
     
     @IBAction func suma(_ sender: UIButton) {
         auxLabel.text = auxLabel.text! + "+"
-        numPantallaC2 = numPantallaC1
-        numPantallaC1 = 0
-        numPantallaM = ""
-        operation = "suma"
-        controllerDecimal = false
-        warning.text = ""
-        
+        screen()
+        operation = operations.suma
     }
-    
     @IBAction func resta(_ sender: UIButton) {
         auxLabel.text = auxLabel.text! + "-"
-        numPantallaC2 = numPantallaC1
-        numPantallaC1 = 0
-        numPantallaM = ""
-        operation = "resta"
-        controllerDecimal = false
-        warning.text = ""
-        
+        screen()
+        operation = operations.resta
     }
-    
     @IBAction func por(_ sender: UIButton) {
         auxLabel.text = auxLabel.text! + "*"
-        numPantallaC2 = numPantallaC1
-        numPantallaC1 = 0
-        numPantallaM = ""
-        operation = "por"
-        controllerDecimal = false
-        warning.text = ""
-        
+        screen()
+        operation = operations.por
     }
     @IBAction func div(_ sender: Any) {
         auxLabel.text = auxLabel.text! + "/"
-        numPantallaC2 = numPantallaC1
-        numPantallaC1 = 0
-        numPantallaM = ""
-        operation = "div"
-        controllerDecimal = false
-        warning.text = ""    }
-    
+        screen()
+        operation = operations.div
+    }
     @IBAction func igual(_ sender: UIButton) {
-        if( operation == "suma"){
+        
+        switch operation {
+        case .none: //
+            break
+        case operations.suma:
             total = numPantallaC2 +  numPantallaC1
             label.text = String(total)
-            numPantallaC1 = total
-            numPantallaC2 = 0
-            
-        }
-        else if ( operation == "por"){ //cambiar a guard let
-            
-            total = numPantallaC2 *  numPantallaC1
-            label.text = String(total)
-        }
-        else if ( operation == "resta"){
+           
+            break
+        case .resta:
             total = numPantallaC2 -  numPantallaC1
             label.text = String(total)
-        }
-        
-        else if ( operation == "div"){
+            
+            break
+        case .div:
             total = numPantallaC2 /  numPantallaC1
             label.text = String(total)
+            break
+        case .por:
+            total = numPantallaC2 *  numPantallaC1
+            label.text = String(total)
+            break
         }
-        
+   
         auxLabel.text = String(total)
         controllerDecimal = false
         warning.text = ""
         
     }
-    
     @IBAction func decimal(_ sender: UIButton) {
         if(!controllerDecimal)
         {
@@ -131,21 +117,18 @@ class ViewController: UIViewController {
             warning.text = "No puedes hacer eso"
         }
     }
-    
     @IBAction func clear(_ sender: Any) {
         
         total = 0
         numPantallaC1 = 0
         numPantallaC2 = 0
-       numPantallaM = "0"
+        numPantallaM = "0"
         label.text = numPantallaM
         auxLabel.text = ""
         controllerDecimal = false
         warning.text = ""
         
     }
-    
-    
     @IBAction func numClicado(_ sender: UIButton) {
         
         var num = String(sender.tag)
@@ -157,8 +140,6 @@ class ViewController: UIViewController {
         numPantallaC1 = numDouble
         auxLabel.text =    auxLabel.text! + num
         warning.text = ""
-        
     }
-
     
 }
