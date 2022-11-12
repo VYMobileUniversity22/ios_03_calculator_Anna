@@ -31,16 +31,24 @@ class ViewController: UIViewController {
     @IBOutlet weak var warning: UILabel!
     @IBOutlet weak var clear: UIButton!
     @IBOutlet weak var butdiv: UIButton!
-    var  total: Double = 0 //Valor calculado
-    var  numPantallaC1: Double = 0 //numero pantalla formato double
-    var  numPantallaC2: Double = 0 //numero pantalla calcular guardar para calcular con el nuevo
-    var  numPantallaM: String = "" // numero pantalla mostrar EN FORMATO STRING
+    @IBOutlet weak var lastresultlabel: UILabel!
+    var  total: Double = 0
+    var  firsNumber: Double = 0
+    var  secondNumber: Double = 0
+    var  screenNumber: String = ""
     var  operation: operations = .none
     var controllerDecimal: Bool = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        let defaults = UserDefaults.standard
+        let key = defaults.bool(forKey: "enabled_preference_decimals")
+        
+            if key == false {
+            butdecimal.alpha = 0.0
+            
+        }
+        else {butdecimal.alpha = 1.0}
     }
     enum operations {
         case none, suma,resta, por, div
@@ -48,11 +56,12 @@ class ViewController: UIViewController {
     @IBAction func buttonClick(_ sender: UIButton) {
     }
     fileprivate func screen() {
-        numPantallaC2 = numPantallaC1
-        numPantallaC1 = 0
-        numPantallaM = ""
+        secondNumber = firsNumber
+        firsNumber = 0
+        screenNumber = ""
         controllerDecimal = false
         warning.text = ""
+        
     }
     
     @IBAction func suma(_ sender: UIButton) {
@@ -81,21 +90,21 @@ class ViewController: UIViewController {
         case .none: //
             break
         case operations.suma:
-            total = numPantallaC2 +  numPantallaC1
+            total = secondNumber +  firsNumber
             label.text = String(total)
-           
+                       
             break
         case .resta:
-            total = numPantallaC2 -  numPantallaC1
+            total = secondNumber -  firsNumber
             label.text = String(total)
             
             break
         case .div:
-            total = numPantallaC2 /  numPantallaC1
+            total = secondNumber /  firsNumber
             label.text = String(total)
             break
         case .por:
-            total = numPantallaC2 *  numPantallaC1
+            total = secondNumber *  firsNumber
             label.text = String(total)
             break
         }
@@ -108,7 +117,7 @@ class ViewController: UIViewController {
     @IBAction func decimal(_ sender: UIButton) {
         if(!controllerDecimal)
         {
-            var decimal = numPantallaM.append(".")
+            screenNumber.append(".")
             auxLabel.text =    auxLabel.text! + "."
             controllerDecimal = true
         }
@@ -120,24 +129,26 @@ class ViewController: UIViewController {
     @IBAction func clear(_ sender: Any) {
         
         total = 0
-        numPantallaC1 = 0
-        numPantallaC2 = 0
-        numPantallaM = "0"
-        label.text = numPantallaM
+        firsNumber = 0
+        secondNumber = 0
+        screenNumber = "0"
+        label.text = screenNumber
         auxLabel.text = ""
         controllerDecimal = false
         warning.text = ""
+       
         
     }
     @IBAction func numClicado(_ sender: UIButton) {
         
-        var num = String(sender.tag)
-        numPantallaM = numPantallaM + num
-        label.text = numPantallaM
-        guard let numDouble = Double(numPantallaM) else {
+        let num = String(sender.tag)
+        screenNumber = screenNumber + num
+        label.text = screenNumber
+   
+        guard let numDouble = Double(screenNumber) else {
             return
         }
-        numPantallaC1 = numDouble
+        firsNumber = numDouble
         auxLabel.text =    auxLabel.text! + num
         warning.text = "" 
     }
