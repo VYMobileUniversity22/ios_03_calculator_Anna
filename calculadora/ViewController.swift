@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var butdiv: UIButton!
     @IBOutlet weak var lastresultlabel: UILabel!
     var  total: Double = 0
-    var  firsNumber: Double = 0
+    var  firstNumber: Double = 0
     var  secondNumber: Double = 0
     var  screenNumber: String = ""
     var  operation: operations = .none
@@ -53,11 +53,23 @@ class ViewController: UIViewController {
     enum operations {
         case none, suma,resta, por, div
     }
-    @IBAction func buttonClick(_ sender: UIButton) {
+    @IBAction func numClicado(_ sender: UIButton) {
+        let num = String(sender.tag)
+        screenNumber = screenNumber + num
+        label.text = screenNumber
+   
+        guard let numDouble = Double(screenNumber) else {
+            return
+        }
+        firstNumber = numDouble
+        auxLabel.text =    auxLabel.text! + num
+        warning.text = ""
+        
     }
+    
     fileprivate func screen() {
-        secondNumber = firsNumber
-        firsNumber = 0
+        secondNumber = firstNumber
+        firstNumber = 0
         screenNumber = ""
         controllerDecimal = false
         warning.text = ""
@@ -90,21 +102,21 @@ class ViewController: UIViewController {
         case .none: //
             break
         case operations.suma:
-            total = secondNumber +  firsNumber
+            total = secondNumber +  firstNumber
             label.text = String(total)
                        
             break
         case .resta:
-            total = secondNumber -  firsNumber
+            total = secondNumber -  firstNumber
             label.text = String(total)
             
             break
         case .div:
-            total = secondNumber /  firsNumber
+            total = secondNumber /  firstNumber
             label.text = String(total)
             break
         case .por:
-            total = secondNumber *  firsNumber
+            total = secondNumber *  firstNumber
             label.text = String(total)
             break
         }
@@ -129,7 +141,7 @@ class ViewController: UIViewController {
     @IBAction func clear(_ sender: Any) {
         
         total = 0
-        firsNumber = 0
+        firstNumber = 0
         secondNumber = 0
         screenNumber = "0"
         label.text = screenNumber
@@ -139,18 +151,4 @@ class ViewController: UIViewController {
        
         
     }
-    @IBAction func numClicado(_ sender: UIButton) {
-        
-        let num = String(sender.tag)
-        screenNumber = screenNumber + num
-        label.text = screenNumber
-   
-        guard let numDouble = Double(screenNumber) else {
-            return
-        }
-        firsNumber = numDouble
-        auxLabel.text =    auxLabel.text! + num
-        warning.text = "" 
-    }
-    
 }

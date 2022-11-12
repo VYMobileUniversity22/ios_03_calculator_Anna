@@ -50,7 +50,6 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="1" cornerStyle="medium"/>
                                                 <connections>
-                                                    <action selector="buttonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TmN-WM-xmB"/>
                                                     <action selector="numClicado:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rz7-e0-6sS"/>
                                                 </connections>
                                             </button>
